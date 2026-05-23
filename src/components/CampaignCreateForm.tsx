@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createCampaign, getItems, uploadImage } from "@/lib/api";
 import { MERCHANT_SLUG, TEAM_SLUG } from "@/lib/constants";
-import { resolveImageUrl } from "@/lib/format";
+import { getErrorMessage, resolveImageUrl } from "@/lib/format";
 import type { Item } from "@/lib/types";
 
 export function CampaignCreateForm() {
@@ -57,7 +57,7 @@ export function CampaignCreateForm() {
       }
       setImageUrls((prev) => [...prev, ...urls]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
+      setError(getErrorMessage(err, "Upload failed"));
     } finally {
       setUploading(false);
     }
@@ -82,7 +82,7 @@ export function CampaignCreateForm() {
       });
       setCreatedId(id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create campaign");
+      setError(getErrorMessage(err, "Failed to create campaign"));
     } finally {
       setSubmitting(false);
     }

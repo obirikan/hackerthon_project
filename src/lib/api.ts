@@ -1,4 +1,5 @@
 import { API_BASE, MERCHANT_SLUG, TEAM_SLUG } from "./constants";
+import { normalizeBasket } from "./normalize";
 import type {
   ApiError,
   Basket,
@@ -67,8 +68,15 @@ export function getCampaign(campaignId: string): Promise<Campaign> {
   return apiFetch(`/campaigns/${campaignId}`);
 }
 
-export function getBasket(basketId: string): Promise<Basket> {
-  return apiFetch(`/baskets/${basketId}`, { cache: "no-store" });
+export async function getBasket(basketId: string): Promise<Basket> {
+  const raw = await apiFetch<unknown>(`/baskets/${basketId}`, {
+    cache: "no-store",
+  });
+  const basket = normalizeBasket(raw);
+  if (!basket.id) {
+    throw new Error("Invalid basket response from server");
+  }
+  return basket;
 }
 
 export function getTeam(slug = TEAM_SLUG): Promise<Team> {

@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { normalizeItem } from "./normalize";
 import type { Item } from "./types";
 
 export interface CartEntry {
@@ -18,13 +19,34 @@ export interface CartEntry {
 interface CartContextValue {
   entries: CartEntry[];
   count: number;
+  hydrated: boolean;
   addItem: (item: Item, qty?: number) => void;
   removeItem: (itemId: string) => void;
   setQty: (itemId: string, qty: number) => void;
   clear: () => void;
 }
 
-const STORAGE_KEY = "sylvara-cart-v1";
+const STORAGE_KEY = "sylvara-cart-v2";
+
+function parseStoredCart(raw: string): CartEntry[] {
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    const entries: CartEntry[] = [];
+    for (const row of parsed) {
+      if (!row || typeof row !== "object") continue;
+      const o = row as Record<string, unknown>;
+      const item = normalizeItem(o.item);
+      const qty = Math.max(1, Math.floor(Number(o.qty) || 1));
+      if (item && Number.isFinite(item.price_minor)) {
+        entries.push({ item, qty });
+      }
+    }
+    return entries;
+  } catch {
+    return [];
+  }
+}
 
 const CartContext = createContext<CartContextValue | null>(null);
 
@@ -33,11 +55,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setEntries(JSON.parse(raw) as CartEntry[]);
-    } catch {
-      /* ignore */
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) setEntries(parseStoredCart(raw));
+    else {
+      const legacy = localStorage.getItem("sylvara-cart-v1");
+      if (legacy) {
+        setEntries(parseStoredCart(legacy));
+        localStorage.removeItem("sylvara-cart-v1");
+      }
     }
     setHydrated(true);
   }, []);
@@ -49,14 +74,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = useCallback((item: Item, qty = 1) => {
     if (!item.in_stock) return;
+    const safeQty = Math.max(1, Math.floor(qty));
     setEntries((prev) => {
       const existing = prev.find((e) => e.item.id === item.id);
       if (existing) {
         return prev.map((e) =>
-          e.item.id === item.id ? { ...e, qty: e.qty + qty } : e,
+          e.item.id === item.id ? { ...e, qty: e.qty + safeQty, item } : e,
         );
       }
-      return [...prev, { item, qty }];
+      return [...prev, { item, qty: safeQty }];
     });
   }, []);
 
@@ -70,7 +96,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setEntries((prev) =>
-      prev.map((e) => (e.item.id === itemId ? { ...e, qty } : e)),
+      prev.map((e) =>
+        e.item.id === itemId ? { ...e, qty: Math.floor(qty) } : e,
+      ),
     );
   }, []);
 
@@ -82,8 +110,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ entries, count, addItem, removeItem, setQty, clear }),
-    [entries, count, addItem, removeItem, setQty, clear],
+    () => ({
+      entries,
+      count,
+      hydrated,
+      addItem,
+      removeItem,
+      setQty,
+      clear,
+    }),
+    [entries, count, hydrated, addItem, removeItem, setQty, clear],
   );
 
   return (

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getCampaigns } from "@/lib/api";
-import { resolveImageUrl } from "@/lib/format";
+import { getErrorMessage, resolveImageUrl } from "@/lib/format";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
 import { ProductCard } from "@/components/ProductCard";
@@ -37,7 +37,7 @@ export function CampaignsView() {
         );
         setFeaturedMap(map);
       })
-      .catch((e: Error) => setError(e.message))
+      .catch((e) => setError(getErrorMessage(e, "Could not load campaigns")))
       .finally(() => setLoading(false));
   };
 

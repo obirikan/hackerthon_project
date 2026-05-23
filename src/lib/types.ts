@@ -27,9 +27,12 @@ export interface BasketLine {
   item_id: string;
   name: string;
   qty: number;
-  unit_price_minor: number;
+  /** Unit price in minor units (API field: price_minor) */
+  price_minor: number;
   line_total_minor: number;
-  image_urls?: string[];
+  currency: string;
+  image_url?: string;
+  in_stock?: boolean;
 }
 
 export interface Basket {

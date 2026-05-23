@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getItems } from "@/lib/api";
+import { getErrorMessage } from "@/lib/format";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
 import { LoadingGrid } from "@/components/LoadingGrid";
@@ -18,7 +19,7 @@ export function ShopView() {
     setError(null);
     getItems()
       .then(setItems)
-      .catch((e: Error) => setError(e.message))
+      .catch((e) => setError(getErrorMessage(e, "Could not load the collection")))
       .finally(() => setLoading(false));
   };
 

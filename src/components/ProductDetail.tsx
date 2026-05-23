@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getItem } from "@/lib/api";
 import { useCart } from "@/lib/cart";
-import { formatPrice, resolveImageUrl } from "@/lib/format";
+import { formatPrice, getErrorMessage, resolveImageUrl } from "@/lib/format";
 import { ErrorState } from "@/components/ErrorState";
 import type { Item } from "@/lib/types";
 
@@ -22,7 +22,7 @@ export function ProductDetail({ itemId }: { itemId: string }) {
     setError(null);
     getItem(itemId)
       .then(setItem)
-      .catch((e: Error) => setError(e.message))
+      .catch((e) => setError(getErrorMessage(e, "Could not load this product")))
       .finally(() => setLoading(false));
   };
 
