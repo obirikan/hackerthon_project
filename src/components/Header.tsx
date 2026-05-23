@@ -15,22 +15,22 @@ export function Header() {
   const { count } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-silver/15 bg-brand-navy/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-brand-silver/20 bg-brand-navy/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 md:px-8">
-        <Link
-          href="/"
-          className="group shrink-0 rounded-sm bg-brand-cream px-3 py-2 transition hover:bg-white sm:px-4 sm:py-2.5"
-        >
-          <div className="relative h-7 w-[132px] sm:h-8 sm:w-[152px] md:h-9 md:w-[172px]">
+        <Link href="/" className="group flex shrink-0 items-center gap-3">
+          <div className="relative h-11 w-11 transition group-hover:opacity-90 sm:h-12 sm:w-12">
             <Image
               src={BRAND_LOGO_URL}
               alt={BRAND_NAME}
               fill
-              className="object-contain object-left"
-              sizes="(max-width: 768px) 132px, 172px"
+              className="object-contain"
+              sizes="48px"
               priority
             />
           </div>
+          <span className="hidden font-display text-lg tracking-wide text-brand-cream sm:block">
+            {BRAND_NAME}
+          </span>
         </Link>
 
         <nav className="flex items-center gap-6 md:gap-10">
@@ -38,7 +38,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[11px] uppercase tracking-[0.2em] text-brand-silver/80 transition hover:text-brand-cream"
+              className="text-[11px] uppercase tracking-[0.2em] text-brand-cream/70 transition hover:text-brand-silver"
             >
               {link.label}
               {link.href === "/basket" && count > 0 && (

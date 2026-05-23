@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { MerchantShell } from "@/components/MerchantShell";
 import { ShopView } from "@/components/ShopView";
-import { getItems, getMerchant } from "@/lib/api";
+import { getItems } from "@/lib/api";
+import { BRAND_TAGLINE } from "@/lib/constants";
 import { resolveImageUrl } from "@/lib/format";
 
 export default async function HomePage() {
-  const merchant = await getMerchant();
   let featuredImage: string | undefined;
   try {
     const items = await getItems();
@@ -20,16 +20,17 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-7xl gap-0 lg:grid-cols-12">
           <div className="flex flex-col justify-end px-5 py-16 md:px-8 md:py-24 lg:col-span-5 lg:py-32">
-            <p className="section-label mb-6">Spring / Summer</p>
+            <p className="section-label mb-6 text-brand-silver">Ghana · Streetwear</p>
             <h1 className="hero-title font-display text-brand-cream">
-              Tailored
+              Mind
               <br />
-              <span className="italic text-brand-silver">for the</span>
+              <span className="text-brand-silver">your</span>
               <br />
-              modern man
+              wears
             </h1>
-            <p className="mt-8 max-w-sm text-sm leading-relaxed text-brand-silver/70">
-              {merchant.description}
+            <p className="mt-8 max-w-sm text-sm leading-relaxed text-brand-cream/60">
+              {BRAND_TAGLINE}. Fresh shirts and everyday fits from Phasion Sense —
+              checkout straight on WhatsApp.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a href="#collection" className="btn-primary">

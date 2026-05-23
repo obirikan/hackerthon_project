@@ -64,7 +64,7 @@ export function CampaignsView() {
     return (
       <EmptyState
         title="No active campaigns"
-        description="Promotions from Mensah will appear here when they launch. Explore the full collection in the meantime."
+        description="Promotions from Phasion Sense will appear here when they launch. Explore the full collection in the meantime."
         actionLabel="View collection"
         actionHref="/"
       />

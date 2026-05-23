@@ -1,5 +1,5 @@
 import { getMerchant } from "@/lib/api";
-import { BRAND_NAME } from "@/lib/constants";
+import { BRAND_NAME, BRAND_TAGLINE } from "@/lib/constants";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/Header";
 import { Marquee } from "@/components/Marquee";
@@ -11,8 +11,8 @@ export async function MerchantShell({
   children: React.ReactNode;
 }) {
   const merchant = await getMerchant();
-  const primary = merchant.brand_colors?.[0] ?? "#1C1C3C";
-  const accent = merchant.brand_colors?.[1] ?? "#C0C0C0";
+  const primary = merchant.brand_colors?.[0] ?? "#0a0a0a";
+  const accent = merchant.brand_colors?.[1] ?? "#ff8c00";
 
   return (
     <div
@@ -27,7 +27,7 @@ export async function MerchantShell({
       <CartProvider>
         <Header />
         <Marquee
-          text={`${BRAND_NAME} — Sharp tailoring · Accra · WhatsApp checkout`}
+          text={`${BRAND_NAME} — ${BRAND_TAGLINE} · Ghana · WhatsApp checkout`}
         />
         <main className="flex-1">{children}</main>
         <Footer merchant={merchant} />

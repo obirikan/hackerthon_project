@@ -11,7 +11,7 @@ export default function CampaignsPage() {
           Campaigns
         </h1>
         <p className="mt-4 max-w-lg text-sm text-brand-silver/60">
-          Active promotions and featured looks from Mensah.
+          Active promotions and featured looks from Phasion Sense.
         </p>
         <Link
           href="/admin/campaigns"

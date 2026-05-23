@@ -15,9 +15,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Mensah — Premium Menswear",
+  title: "Phasion Sense — Mind Your Wears",
   description:
-    "Mensah — sharp men's tailoring. Shop the collection and checkout via WhatsApp.",
+    "Phasion Sense — Ghanaian streetwear and shirts. Shop the collection and checkout via WhatsApp.",
 };
 
 export default function RootLayout({

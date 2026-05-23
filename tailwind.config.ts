@@ -6,11 +6,11 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          navy: "#1c1c3c",
-          "navy-light": "#2a2a52",
-          silver: "#c0c0c0",
-          cream: "#f4f1ea",
-          accent: "#8b9dc3",
+          navy: "#0a0a0a",
+          "navy-light": "#1a1a1a",
+          silver: "#ff8c00",
+          cream: "#f5f5f5",
+          accent: "#e67e00",
         },
       },
       fontFamily: {

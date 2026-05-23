@@ -8,16 +8,17 @@ export function Footer({ merchant }: { merchant: Merchant }) {
     <footer className="border-t border-brand-silver/15 px-5 py-16 md:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="mb-6 inline-block rounded-sm bg-brand-cream px-4 py-2.5">
-            <div className="relative h-8 w-[152px]">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="relative h-12 w-12">
               <Image
                 src={BRAND_LOGO_URL}
                 alt={BRAND_NAME}
                 fill
-                className="object-contain object-left"
-                sizes="152px"
+                className="object-contain"
+                sizes="48px"
               />
             </div>
+            <p className="font-display text-xl text-brand-cream">{BRAND_NAME}</p>
           </div>
           <p className="mt-2 max-w-sm text-sm text-brand-silver/50">
             {merchant.description}

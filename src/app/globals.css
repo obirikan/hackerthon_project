@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --brand-navy: #1c1c3c;
-  --brand-navy-light: #2a2a52;
-  --brand-silver: #c0c0c0;
-  --brand-cream: #f4f1ea;
-  --brand-accent: #8b9dc3;
+  --brand-navy: #0a0a0a;
+  --brand-navy-light: #1a1a1a;
+  --brand-silver: #ff8c00;
+  --brand-cream: #f5f5f5;
+  --brand-accent: #e67e00;
 }
 
 * {
@@ -36,7 +36,7 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-3.5 text-[11px] uppercase tracking-[0.25em] bg-brand-silver text-brand-navy transition hover:bg-brand-cream disabled:opacity-40 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center px-8 py-3.5 text-[11px] uppercase tracking-[0.25em] bg-brand-silver text-brand-navy font-medium transition hover:bg-brand-accent disabled:opacity-40 disabled:cursor-not-allowed;
   }
 
   .btn-ghost {
