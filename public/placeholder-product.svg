@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500" fill="none">
+  <rect width="400" height="500" fill="#1C1C3C"/>
+  <path d="M200 180 L260 320 H140 Z" stroke="#C0C0C0" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <text x="200" y="380" text-anchor="middle" fill="#C0C0C0" font-family="serif" font-size="14" opacity="0.5">SYLVARA</text>
+</svg>
